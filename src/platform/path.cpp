@@ -1,6 +1,7 @@
 #include "platform/path.h"
 
 #include <windows.h>
+#include <winnls.h>
 #include <cstdio>
 #include <cstring>
 
@@ -26,7 +27,15 @@ void pathInit(const char* argv0)
 
     g_base[0] = '\0';
 
-    n = GetModuleFileNameA(NULL, g_base, sizeof(g_base));
+    {
+        WCHAR wpath[MAX_PATH];
+        DWORD wn = GetModuleFileName(NULL, wpath, MAX_PATH);
+        if (wn != 0)
+            n = (DWORD)WideCharToMultiByte(CP_ACP, 0, wpath, -1,
+                                           g_base, sizeof(g_base), NULL, NULL) - 1;
+        else
+            n = 0;
+    }
     if (n == 0 || n >= sizeof(g_base))
     {
         if (argv0 && argv0[0])
