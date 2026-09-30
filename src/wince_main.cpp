@@ -171,20 +171,20 @@ static void drawCube()
     };
     ScreenPoint p[8];
     int i;
+    int j;
+    int oi;
+    int f;
     for (i=0;i<8;i++) {
         Vec3 r=rotatePoint(verts[i],g_angle*0.72f,g_angle);
         if (!projectPoint(r,&p[i])) return;
     }
 
     int order[6] = {0,1,2,3,4,5};
-    int i;
-    int j;
     for (i=0;i<5;i++) for (j=i+1;j<6;j++) {
         float zi=(p[faces[order[i]][0]].z+p[faces[order[i]][1]].z+p[faces[order[i]][2]].z+p[faces[order[i]][3]].z);
         float zj=(p[faces[order[j]][0]].z+p[faces[order[j]][1]].z+p[faces[order[j]][2]].z+p[faces[order[j]][3]].z);
         if (zi < zj) { int t=order[i]; order[i]=order[j]; order[j]=t; }
     }
-    int oi;
     for (oi=0;oi<6;oi++) {
         int f=order[oi];
         ScreenPoint a=p[faces[f][0]], b=p[faces[f][1]];
@@ -193,7 +193,6 @@ static void drawCube()
         drawTriangle(a,c,d,colors[f]);
     }
 
-    int f;
     for (f=0;f<6;f++) {
         int i0=faces[f][0],i1=faces[f][1],i2=faces[f][2],i3=faces[f][3];
         g_framebuffer.drawLine(p[i0].x,p[i0].y,p[i1].x,p[i1].y,0xFF2A1A10u);
