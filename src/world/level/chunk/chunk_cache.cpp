@@ -7,8 +7,8 @@
 
 #include <string.h>
 #include <math.h>
-#include <pspkernel.h>
 #include "util/prof.h"
+#include <windows.h>
 
 unsigned int g_streamIn = 0, g_streamOut = 0;
 
@@ -111,13 +111,13 @@ static bool finishStep(World* w) {
         profBegin(PROF_SDECOR);
 
         const unsigned int DECOR_BUDGET_US = 2000;
-        unsigned int t0 = sceKernelGetSystemTimeLow();
+        unsigned long t0 = GetTickCount();
         bool decorDone;
         do {
             decorDone = postProcessPhase(w, cx + kDx[i], cz + kDz[i], s_decorPhase);
             s_decorPhase++;
         } while (!decorDone &&
-                 (unsigned int)(sceKernelGetSystemTimeLow() - t0) < DECOR_BUDGET_US);
+                 (unsigned int)(GetTickCount() - t0) < DECOR_BUDGET_US);
         profEnd(PROF_SDECOR);
         if (!decorDone) return true;
         s_decorPhase = 0;
@@ -178,42 +178,14 @@ void worldEnsureArea(World* w, int cx, int cz, int r) {
             worldGetChunk(w, cx + dx, cz + dz);
 }
 
-static volatile bool g_jobPending = false, g_jobDone = false, g_workerQuit = false;
-static volatile int  g_jobX = 0, g_jobZ = 0;
+static volatile bool g_jobPending = false;
+static volatile bool g_jobDone = false;
+static volatile bool g_workerQuit = false;
 static int s_workerThid = -1;
-
 static World* volatile s_genWorld = 0;
 
-static int genWorker(SceSize, void*) {
-    while (!g_workerQuit) {
-        if (!g_jobPending) { sceKernelDelayThread(2000); continue; }
-        activeLevelSource().buildChunk(s_genWorld, g_jobX, g_jobZ);
-        g_jobPending = false;
-        g_jobDone = true;
-    }
-    return 0;
-}
-
-void worldGenWorkerStart(World* w) {
-    if (s_workerThid >= 0) return;
-
-    if (worldFitsInWindow(w)) return;
-    g_workerQuit = false; g_jobPending = false; g_jobDone = false; s_pend = false;
-
-    s_workerThid = sceKernelCreateThread("chunk_gen", genWorker, 0x24, 0x10000, 0, 0);
-    if (s_workerThid >= 0) sceKernelStartThread(s_workerThid, 0, 0);
-}
-
-void worldGenWorkerStop() {
-    if (s_workerThid < 0) return;
-    g_workerQuit = true;
-
-    sceKernelWaitThreadEnd(s_workerThid, 0);
-    sceKernelDeleteThread(s_workerThid);
-    s_workerThid = -1;
-
-    g_jobPending = false; g_jobDone = false; s_pend = false;
-}
+void worldGenWorkerStart(World* w) { (void)w; s_workerThid = -1; }
+void worldGenWorkerStop() { s_workerThid = -1; g_jobPending = false; g_jobDone = false; s_genWorld = 0; s_pend = false; }
 
 static int loadRadius(const World* w) {
     extern float g_viewDistEff;
