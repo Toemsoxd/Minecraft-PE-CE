@@ -20,7 +20,6 @@ bool winceWorldInit()
     if (g_runtimeReady)
         return true;
 
-    ZeroMemory(&g_world, sizeof(g_world));
     g_level.w = &g_world;
     g_level.player = 0;
 
@@ -45,9 +44,6 @@ bool winceWorldLoadFirst()
 
     worldListScan(&list);
     if (list.count <= 0)
-        return false;
-
-    if (!worldListCreate)
         return false;
 
     snprintf(absDir, sizeof(absDir), "%s", savePath("saves"));
