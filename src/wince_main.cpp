@@ -1,7 +1,13 @@
 #include <windows.h>
 #include <math.h>
 #include "platform/time_wince.h"
+#include "platform/time.h"
+#include "platform/path.h"
 #include "platform/framebuffer_wince.h"
+
+unsigned long g_timeBootMs = 0;
+float g_gameSeconds = 0.0f;
+bool g_gameFrozen = true;
 
 static HWND g_window = 0;
 static FramebufferWince g_framebuffer;
