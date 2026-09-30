@@ -39,20 +39,23 @@ static long dateKey(const SYSTEMTIME& t)
 
 static bool getFileDate(const char* path, SYSTEMTIME* out)
 {
-    WIN32_FILE_ATTRIBUTE_DATA data;
+    WIN32_FIND_DATA fd;
+    HANDLE h;
     SYSTEMTIME local;
 
     if (!out)
         return false;
 
-    ZeroMemory(&data, sizeof(data));
-    if (!GetFileAttributesEx(path, GetFileExInfoStandard, &data))
+    ZeroMemory(&fd, sizeof(fd));
+    h = FindFirstFile(path, &fd);
+    if (h == INVALID_HANDLE_VALUE)
         return false;
 
-    if (!FileTimeToLocalFileTime(&data.ftLastWriteTime, &data.ftLastWriteTime))
-        return false;
+    FindClose(h);
 
-    if (!FileTimeToSystemTime(&data.ftLastWriteTime, &local))
+    if (!FileTimeToLocalFileTime(&fd.ftLastWriteTime, &fd.ftLastWriteTime))
+        return false;
+    if (!FileTimeToSystemTime(&fd.ftLastWriteTime, &local))
         return false;
 
     *out = local;
