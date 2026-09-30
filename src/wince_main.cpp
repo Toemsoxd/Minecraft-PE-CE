@@ -80,7 +80,7 @@ static void drawTitleScreen()
     g_framebuffer.drawText(160, 63, TEXT("POCKET EDITION"), 0xFFE0E0E0u, true);
 
     g_framebuffer.fillRect(65, 116, 190, 32, 0xFF5A5A5Au);
-    g_framebuffer.fillRect(66, 117, 188, 30, 0xFF7A7A7Auu);
+    g_framebuffer.fillRect(66, 117, 188, 30, 0xFF7A7A7Au);
     g_framebuffer.drawText(160, 132, TEXT("PLAY"), 0xFFFFFFFFu, true);
 
     g_framebuffer.fillRect(65, 158, 190, 32, 0xFF5A5A5Au);
@@ -171,7 +171,14 @@ static void drawCube()
         if (!projectPoint(r,&p[i])) return;
     }
 
-    for (int f=0;f<6;f++) {
+    int order[6] = {0,1,2,3,4,5};
+    for (int i=0;i<5;i++) for (int j=i+1;j<6;j++) {
+        float zi=(p[faces[order[i]][0]].z+p[faces[order[i]][1]].z+p[faces[order[i]][2]].z+p[faces[order[i]][3]].z);
+        float zj=(p[faces[order[j]][0]].z+p[faces[order[j]][1]].z+p[faces[order[j]][2]].z+p[faces[order[j]][3]].z);
+        if (zi < zj) { int t=order[i]; order[i]=order[j]; order[j]=t; }
+    }
+    for (int oi=0;oi<6;oi++) {
+        int f=order[oi];
         ScreenPoint a=p[faces[f][0]], b=p[faces[f][1]];
         ScreenPoint c=p[faces[f][2]], d=p[faces[f][3]];
         drawTriangle(a,b,c,colors[f]);
