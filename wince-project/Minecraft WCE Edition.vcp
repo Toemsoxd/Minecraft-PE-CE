@@ -37,7 +37,7 @@ RSC=rc.exe
 # PROP BASE Intermediate_Dir "ARMV4Rel"
 # PROP Output_Dir "ARMV4Rel"
 # PROP Intermediate_Dir "ARMV4Rel"
-# ADD CPP /nologo /W3 /I "src" /D "WIN32" /D "_WIN32_WCE" /D "ARMV4" /D "NDEBUG" /D "_WINDOWS" /c
+# ADD CPP /nologo /W3 /I "..\src" /D "WIN32" /D "_WIN32_WCE" /D "ARMV4" /D "NDEBUG" /D "_WINDOWS" /c
 # ADD LINK32 commctrl.lib coredll.lib /nologo /subsystem:windows /MACHINE:ARM
 !ELSEIF "$(CFG)" == "Minecraft WCE Edition - Win32 (WCE ARMV4) Debug"
 # PROP BASE Use_MFC 0
@@ -46,7 +46,7 @@ RSC=rc.exe
 # PROP BASE Intermediate_Dir "ARMV4Dbg"
 # PROP Output_Dir "ARMV4Dbg"
 # PROP Intermediate_Dir "ARMV4Dbg"
-# ADD CPP /nologo /W3 /I "src" /D "WIN32" /D "_WIN32_WCE" /D "ARMV4" /D "_DEBUG" /D "_WINDOWS" /c
+# ADD CPP /nologo /W3 /I "..\src" /D "WIN32" /D "_WIN32_WCE" /D "ARMV4" /D "_DEBUG" /D "_WINDOWS" /c
 # ADD LINK32 commctrl.lib coredll.lib /nologo /subsystem:windows /debug /MACHINE:ARM
 !ELSEIF "$(CFG)" == "Minecraft WCE Edition - Win32 (WCE ARMV4I) Release"
 # PROP BASE Use_MFC 0
@@ -55,7 +55,7 @@ RSC=rc.exe
 # PROP BASE Intermediate_Dir "ARMV4IRel"
 # PROP Output_Dir "ARMV4IRel"
 # PROP Intermediate_Dir "ARMV4IRel"
-# ADD CPP /nologo /W3 /I "src" /D "WIN32" /D "_WIN32_WCE" /D "ARMV4I" /D "NDEBUG" /D "_WINDOWS" /c
+# ADD CPP /nologo /W3 /I "..\src" /D "WIN32" /D "_WIN32_WCE" /D "ARMV4I" /D "NDEBUG" /D "_WINDOWS" /c
 # ADD LINK32 commctrl.lib coredll.lib /nologo /subsystem:windows /MACHINE:ARM
 !ELSEIF "$(CFG)" == "Minecraft WCE Edition - Win32 (WCE ARMV4I) Debug"
 # PROP BASE Use_MFC 0
@@ -64,7 +64,7 @@ RSC=rc.exe
 # PROP BASE Intermediate_Dir "ARMV4IDbg"
 # PROP Output_Dir "ARMV4IDbg"
 # PROP Intermediate_Dir "ARMV4IDbg"
-# ADD CPP /nologo /W3 /I "src" /D "WIN32" /D "_WIN32_WCE" /D "ARMV4I" /D "_DEBUG" /D "_WINDOWS" /c
+# ADD CPP /nologo /W3 /I "..\src" /D "WIN32" /D "_WIN32_WCE" /D "ARMV4I" /D "_DEBUG" /D "_WINDOWS" /c
 # ADD LINK32 commctrl.lib coredll.lib /nologo /subsystem:windows /debug /MACHINE:ARM
 !ENDIF
 
