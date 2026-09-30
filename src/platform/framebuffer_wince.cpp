@@ -21,6 +21,9 @@ bool FramebufferWince::init(){
 }
 void FramebufferWince::shutdown(){delete [] m_pixels;m_pixels=0;}
 void FramebufferWince::clear(unsigned int c){if(!m_pixels)return;for(int i=0;i<FRAMEBUFFER_WIDTH*FRAMEBUFFER_HEIGHT;i++)m_pixels[i]=c;}
+void FramebufferWince::drawPixel(int x,int y,unsigned int c){if(!m_pixels)return;if(x<0||x>=FRAMEBUFFER_WIDTH||y<0||y>=FRAMEBUFFER_HEIGHT)return;m_pixels[y*FRAMEBUFFER_WIDTH+x]=c;}
+void FramebufferWince::drawLine(int x0,int y0,int x1,int y1,unsigned int c){int dx=x1-x0;int sx=dx<0?-1:1;if(dx<0)dx=-dx;int dy=y1-y0;int sy=dy<0?-1:1;if(dy<0)dy=-dy;int err=dx-dy;for(;;){drawPixel(x0,y0,c);if(x0==x1&&y0==y1)break;int e2=err<<1;if(e2>-dy){err-=dy;x0+=sx;}if(e2<dx){err+=dx;y0+=sy;}}
+}
 void FramebufferWince::fillRect(int x,int y,int w,int h,unsigned int c){
  if(!m_pixels||w<=0||h<=0)return; if(x<0){w+=x;x=0;} if(y<0){h+=y;y=0;} if(x+w>FRAMEBUFFER_WIDTH)w=FRAMEBUFFER_WIDTH-x; if(y+h>FRAMEBUFFER_HEIGHT)h=FRAMEBUFFER_HEIGHT-y; if(w<=0||h<=0)return;
  for(int yy=y;yy<y+h;yy++){unsigned int* p=m_pixels+yy*FRAMEBUFFER_WIDTH+x;for(int xx=0;xx<w;xx++)p[xx]=c;}
