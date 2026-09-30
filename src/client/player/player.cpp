@@ -25,7 +25,6 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
-#include <pspkernel.h>
 
 extern World g_world;
 extern Level g_level;
