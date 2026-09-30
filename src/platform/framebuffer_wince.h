@@ -17,6 +17,8 @@ public:
 
     void clear(unsigned int argb);
     void fillRect(int x, int y, int w, int h, unsigned int argb);
+    void drawPixel(int x, int y, unsigned int argb);
+    void drawLine(int x0, int y0, int x1, int y1, unsigned int argb);
     void drawText(int x, int y, const TCHAR* text, unsigned int argb, bool centered);
 
     void present(HDC hdc, const RECT* dirty);
