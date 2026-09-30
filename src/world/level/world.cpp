@@ -20,6 +20,8 @@
 
 static int g_meshBuildCursor = 0;
 static long g_worldSeed = 0;
+float g_viewDist = WORLD_VIEW_DIST;
+float g_viewDistEff = WORLD_VIEW_DIST;
 
 long worldSeed(void) { return g_worldSeed; }
 
@@ -147,8 +149,8 @@ int worldBuildMeshesStep(World* w, int maxChunks) {
 
     extern float g_viewDist;
     const float maxD2 = g_viewDist * g_viewDist;
-    const float px = g_level.player ? g_level.player->x : 0.0f;
-    const float pz = g_level.player ? g_level.player->z : 0.0f;
+    const float px = g_level.player ? g_level.player->x : (float)g_level.spawnX;
+    const float pz = g_level.player ? g_level.player->z : (float)g_level.spawnZ;
     const int total = w->slotN * w->slotN;
 
     int budget = maxChunks;
