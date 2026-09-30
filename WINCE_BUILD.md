@@ -10,19 +10,24 @@ The title screen remains procedural, but PLAY now enters the actual CE world eng
 
 ### eVC++ setup
 
-Use eMbedded Visual C++ 4.0 SP2:
+Use eMbedded Visual C++ 4.0 SP2 with the Windows CE .NET 4.2 SDK and the **ARMV4** target.
 
-1. Create a WCE Application project.
-2. Select the Windows CE .NET 4.2 SDK.
-3. Select ARMV4.
-4. Prefer an Empty Project.
-5. Add these CE source files:
-   - src/wince_main.cpp
-   - src/platform/framebuffer_wince.cpp\n   - src/platform/wince_renderer.cpp\n   - src/platform/wince_world.cpp
-6. Add src to the compiler include path so headers such as platform/framebuffer_wince.h and platform/time_wince.h resolve.
-7. Do not add the PSP src/main.cpp to the build; it is still the PSP entry point.
-8. Build for Release or Debug.
-9. Copy the resulting .exe to the HTC S730 and launch it.
+The repository now includes a legacy eVC++ workspace under `wince-project/`:
+
+1. Open `wince-project/Minecraft WCE Edition.vcw`.
+2. Select **Win32 (WCE ARMV4) Release** for the HTC S730.
+3. The `.vcp` already contains the current CE source set and uses `..\src` as its include path.
+4. Do not add the PSP `src/main.cpp`; it remains the PSP entry point and is intentionally not part of the CE project.
+5. Build the project.
+6. Copy the resulting `.exe` to the HTC S730 and launch it.
+
+The project also keeps ARMV4I configurations for compatibility/reference, but the S730 build target remains ARMV4.
+
+### CE texture path
+
+The first CE renderer now samples the existing `data/images/terrain_565.h` 256x256 RGB565 MCPE terrain atlas instead of using flat procedural block colors. The sampler uses the existing `Tile::getTexture()` mapping, including block metadata and tint values.
+
+The atlas is embedded as C data, so this renderer does not require a libpng runtime dependency on the S730.
 
 ### Current architecture
 
