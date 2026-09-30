@@ -1,8 +1,6 @@
 #include <windows.h>
 #include <math.h>
 #include "platform/time_wince.h"
-#include "platform/time.h"
-#include "platform/path.h"
 #include "platform/framebuffer_wince.h"
 
 unsigned long g_timeBootMs = 0;
