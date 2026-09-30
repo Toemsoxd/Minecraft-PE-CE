@@ -2,9 +2,6 @@
 #include "world/level/chunk/chunk.h"
 #include "world/level/tile/tiles.h"
 
-#include <pspgu.h>
-#include <pspgum.h>
-#include <pspkernel.h>
 #include <malloc.h>
 
 unsigned int g_brightColor[16];
