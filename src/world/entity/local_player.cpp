@@ -12,7 +12,7 @@
 #include "world/level/tile/redstone_ore.h"
 #include <cmath>
 #include <cstdlib>
-#include <pspctrl.h>
+#include "platform/input_wince.h"
 
 extern World g_world;
 
