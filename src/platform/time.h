@@ -1,19 +1,23 @@
 #ifndef MCPSP_PLATFORM_TIME_H
 #define MCPSP_PLATFORM_TIME_H
 
-#include <pspkernel.h>
+#include <windows.h>
 
-static inline bool timeReached(unsigned int nowUs, unsigned int deadlineUs) {
-    return (int)(nowUs - deadlineUs) >= 0;
+static inline bool timeReached(unsigned long nowMs, unsigned long deadlineMs)
+{
+    return (long)(nowMs - deadlineMs) >= 0;
 }
 
-extern SceInt64 g_timeBootUs;
+extern unsigned long g_timeBootMs;
 
-static inline float nowSeconds() {
-    if (g_timeBootUs == 0) {
-        g_timeBootUs = sceKernelGetSystemTimeWide();
-    }
-    return (float)(sceKernelGetSystemTimeWide() - g_timeBootUs) / 1000000.0f;
+static inline float nowSeconds()
+{
+    unsigned long now = GetTickCount();
+
+    if (g_timeBootMs == 0)
+        g_timeBootMs = now;
+
+    return (float)(now - g_timeBootMs) / 1000.0f;
 }
 
 extern float g_gameSeconds;
