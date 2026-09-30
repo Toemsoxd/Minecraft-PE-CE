@@ -10,6 +10,8 @@ extern bool g_worldBuilt;
 
 bool winceWorldInit();
 bool winceWorldLoadFirst();
+bool winceWorldCreateTest();
+bool winceWorldStart();
 void winceWorldShutdown();
 int winceWorldProgress();
 
