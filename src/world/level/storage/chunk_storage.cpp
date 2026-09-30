@@ -132,13 +132,21 @@ static RegionFile* regionFor(int cx, int cz, bool create) {
     return rf;
 }
 
-static SceUID s_lock = -1;
-static void storageLock() {
-    if (s_lock < 0) s_lock = sceKernelCreateSema("mcChunkStore", 0, 1, 1, NULL);
-    if (s_lock >= 0) sceKernelWaitSema(s_lock, 1, NULL);
+static CRITICAL_SECTION s_lock;
+static bool s_lockReady = false;
+static void storageLock()
+{
+    if (!s_lockReady)
+    {
+        InitializeCriticalSection(&s_lock);
+        s_lockReady = true;
+    }
+    EnterCriticalSection(&s_lock);
 }
-static void storageUnlock() {
-    if (s_lock >= 0) sceKernelSignalSema(s_lock, 1);
+static void storageUnlock()
+{
+    if (s_lockReady)
+        LeaveCriticalSection(&s_lock);
 }
 
 namespace { struct StorageGuard {
