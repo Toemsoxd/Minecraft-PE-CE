@@ -98,19 +98,24 @@ static bool fileExists(const std::string& path) {
 }
 
 static CompoundTag* buildPlayerTag(World* w) {
-    (void)w;
     CompoundTag* p = new CompoundTag();
 
     float px = g_level.player ? g_level.player->x : 0.0f;
     float py = g_level.player ? g_level.player->y : -1.0f;
     float pz = g_level.player ? g_level.player->z : 0.0f;
+
     if (!(px == px) || !(py == py) || !(pz == pz) || py < 0.0f) {
-        int fx, fz, feetY; worldFindSpawn(w, &fx, &fz, &feetY);
-        px = fx + 0.5f; py = feetY + PLAYER_EYE; pz = fz + 0.5f;
+        int fx, fz, feetY;
+        worldFindSpawn(w, &fx, &fz, &feetY);
+        px = fx + 0.5f;
+        py = feetY + PLAYER_EYE;
+        pz = fz + 0.5f;
     }
-    p->put("Pos",      floatList(px, py, pz));
-    p->put("Motion",   floatList(0.0f, 0.0f, 0.0f));
-    p->put("Rotation", floatList(g_level.player->yRot, g_level.player->xRot));
+
+    p->put("Pos", floatList(px, py, pz));
+    p->put("Motion", floatList(0.0f, 0.0f, 0.0f));
+    p->put("Rotation", floatList(g_level.player ? g_level.player->yRot : 0.0f,
+                                 g_level.player ? g_level.player->xRot : 0.0f));
     p->putShort("Health", (short)(g_level.player ? g_level.player->health : 20));
 
     p->putBoolean("Sleeping", g_level.player ? g_level.player->sleeping : false);
@@ -118,57 +123,49 @@ static CompoundTag* buildPlayerTag(World* w) {
     p->putInt("BedPositionX", g_level.player ? g_level.player->bedX : 0);
     p->putInt("BedPositionY", g_level.player ? g_level.player->bedY : 0);
     p->putInt("BedPositionZ", g_level.player ? g_level.player->bedZ : 0);
-
     p->putInt("SpawnX", g_level.player ? g_level.player->respawnX : g_level.spawnX);
     p->putInt("SpawnY", g_level.player ? g_level.player->respawnY : g_level.spawnY);
     p->putInt("SpawnZ", g_level.player ? g_level.player->respawnZ : g_level.spawnZ);
 
     ListTag* inv = new ListTag();
-    if (g_level.player)
-    {
-    if (g_level.player->inventory->isCreative()) {
-        for (int i = 0; i < Inventory::HOTBAR; i++) {
-            ItemInstance* it = g_level.player->inventory->getLinked(i);
-            if (!it || it->isNull()) continue;
-            CompoundTag* slot = new CompoundTag();
-            slot->putByte("Slot", (char)i);
-            slot->putShort("id", it->id);
-            slot->putByte("Count", (char)it->count);
-            slot->putShort("Damage", it->data);
-            inv->add(slot);
-        }
-    } else {
+    ListTag* ar = new ListTag();
 
-        const int LINKS = 9;
-        for (int i = 0; i < LINKS; i++) {
-            int link = (i < Inventory::HOTBAR) ? g_level.player->inventory->linkedSlots[i].inventorySlot : -1;
-            CompoundTag* slot = new CompoundTag();
-            slot->putByte("Slot", (char)i);
-            slot->putShort("id", 255);
-            slot->putByte("Count", (char)255);
-            slot->putShort("Damage", (short)(link < 0 ? -1 : link - Inventory::HOTBAR + LINKS));
-            inv->add(slot);
+    if (g_level.player) {
+        if (g_level.player->inventory->isCreative()) {
+            for (int i = 0; i < Inventory::HOTBAR; i++) {
+                ItemInstance* it = g_level.player->inventory->getLinked(i);
+                if (!it || it->isNull()) continue;
+                CompoundTag* slot = new CompoundTag();
+                slot->putByte("Slot", (char)i);
+                slot->putShort("id", it->id);
+                slot->putByte("Count", (char)it->count);
+                slot->putShort("Damage", it->data);
+                inv->add(slot);
+            }
+        } else {
+            const int LINKS = 9;
+            for (int i = 0; i < LINKS; i++) {
+                int link = (i < Inventory::HOTBAR) ?
+                    g_level.player->inventory->linkedSlots[i].inventorySlot : -1;
+                CompoundTag* slot = new CompoundTag();
+                slot->putByte("Slot", (char)i);
+                slot->putShort("id", 255);
+                slot->putByte("Count", (char)255);
+                slot->putShort("Damage", (short)(link < 0 ? -1 : link - Inventory::HOTBAR + LINKS));
+                inv->add(slot);
+            }
+            for (int s = 0; s < Inventory::SURVIVAL_SLOTS; s++) {
+                ItemInstance* it = g_level.player->inventory->gridItem(s);
+                if (!it || it->isNull()) continue;
+                CompoundTag* slot = new CompoundTag();
+                slot->putByte("Slot", (char)(s + LINKS));
+                slot->putShort("id", it->id);
+                slot->putByte("Count", (char)it->count);
+                slot->putShort("Damage", it->data);
+                inv->add(slot);
+            }
         }
-        for (int s = 0; s < Inventory::SURVIVAL_SLOTS; s++) {
-            ItemInstance* it = g_level.player->inventory->gridItem(s);
-            if (!it || it->isNull()) continue;
-            CompoundTag* slot = new CompoundTag();
-            slot->putByte("Slot", (char)(s + LINKS));
-            slot->putShort("id", it->id);
-            slot->putByte("Count", (char)it->count);
-            slot->putShort("Damage", it->data);
-            inv->add(slot);
-        }
-    }
-    p->put("Inventory", inv);
 
-    }
-    p->put("Inventory", inv);
-
-    {
-        ListTag* ar = new ListTag();
-        if (g_level.player)
-        {
         for (int i = 0; i < Player::NUM_ARMOR; i++) {
             ItemInstance& it = g_level.player->armor[i];
             CompoundTag* slot = new CompoundTag();
@@ -177,10 +174,10 @@ static CompoundTag* buildPlayerTag(World* w) {
             slot->putShort("Damage", it.data);
             ar->add(slot);
         }
-        p->put("Armor", ar);
     }
-        }
-        p->put("Armor", ar);
+
+    p->put("Inventory", inv);
+    p->put("Armor", ar);
     return p;
 }
 
