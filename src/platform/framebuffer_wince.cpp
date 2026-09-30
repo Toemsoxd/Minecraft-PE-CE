@@ -30,7 +30,7 @@ void FramebufferWince::drawText(int x,int y,const TCHAR* s,unsigned int c,bool c
  for(int n=0;n<len;n++){int g=glyph(s[n]);if(!g){sx+=6*scale;continue;}for(int col=0;col<5;col++)for(int row=0;row<7;row++)if(font5x7[g][col]&(1<<row))fillRect(sx+col*scale,y+row*scale,scale,scale,c);sx+=6*scale;}
 }
 void FramebufferWince::present(HDC hdc,const RECT* dirty){
- if(!m_pixels||!hdc)return;RECT r={0,0,FRAMEBUFFER_WIDTH,FRAMEBUFFER_HEIGHT};if(dirty)r=*dirty;int w=r.right-r.left,h=r.bottom-r.top;if(w<=0||h<=0)return;SetStretchBltMode(hdc,COLORONCOLOR);StretchDIBits(hdc,r.left,r.top,w,h,r.left,r.top,w,h,m_pixels,&m_bmi,DIB_RGB_COLORS,SRCCOPY);
+ if(!m_pixels||!hdc)return;RECT r={0,0,FRAMEBUFFER_WIDTH,FRAMEBUFFER_HEIGHT};if(dirty)r=*dirty;int w=r.right-r.left,h=r.bottom-r.top;if(w<=0||h<=0)return;/* CE 4.2: no desktop StretchBlt mode dependency. */StretchDIBits(hdc,r.left,r.top,w,h,r.left,r.top,w,h,m_pixels,&m_bmi,DIB_RGB_COLORS,SRCCOPY);
 }
 void FramebufferWince::presentWindow(HWND hwnd){
  if(!hwnd)return;HDC dc=GetDC(hwnd);if(dc){RECT r;GetClientRect(hwnd,&r);StretchDIBits(dc,0,0,r.right,r.bottom,0,0,FRAMEBUFFER_WIDTH,FRAMEBUFFER_HEIGHT,m_pixels,&m_bmi,DIB_RGB_COLORS,SRCCOPY);ReleaseDC(hwnd,dc);}
