@@ -1,0 +1,904 @@
+# Microsoft eMbedded Visual Tools Project File - Name="Minecraft WCE Edition" - Package Owner=<4>
+# Microsoft eMbedded Visual Tools Generated Build File, Format Version 6.02
+# ** DO NOT EDIT **
+
+# TARGTYPE "Win32 (WCE ARMV4) Application" 0xa301
+# TARGTYPE "Win32 (WCE ARMV4I) Application" 0xa501
+
+CFG=Minecraft WCE Edition - Win32 (WCE ARMV4) Debug
+
+!MESSAGE This is not a valid makefile. To build this project using NMAKE,
+!MESSAGE use the Export Makefile command and run
+!MESSAGE
+!MESSAGE NMAKE /f "Minecraft WCE Edition.vcn".
+!MESSAGE
+
+!MESSAGE Possible choices for configuration are:
+!MESSAGE
+!MESSAGE "Minecraft WCE Edition - Win32 (WCE ARMV4) Release"
+!MESSAGE "Minecraft WCE Edition - Win32 (WCE ARMV4) Debug"
+!MESSAGE "Minecraft WCE Edition - Win32 (WCE ARMV4I) Release"
+!MESSAGE "Minecraft WCE Edition - Win32 (WCE ARMV4I) Debug"
+!MESSAGE
+
+# Begin Project
+# PROP AllowPerConfigDependencies 0
+# PROP Scc_ProjName ""
+# PROP Scc_LocalPath ""
+# PROP ATL_Project 2
+CPP=clarm.exe
+MTL=midl.exe
+RSC=rc.exe
+
+!IF "$(CFG)" == "Minecraft WCE Edition - Win32 (WCE ARMV4) Release"
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 0
+# PROP BASE Output_Dir "ARMV4Rel"
+# PROP BASE Intermediate_Dir "ARMV4Rel"
+# PROP Output_Dir "ARMV4Rel"
+# PROP Intermediate_Dir "ARMV4Rel"
+# ADD CPP /nologo /W3 /I "src" /D "WIN32" /D "_WIN32_WCE" /D "ARMV4" /D "NDEBUG" /D "_WINDOWS" /c
+# ADD LINK32 commctrl.lib coredll.lib /nologo /subsystem:windows /MACHINE:ARM
+!ELSEIF "$(CFG)" == "Minecraft WCE Edition - Win32 (WCE ARMV4) Debug"
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir "ARMV4Dbg"
+# PROP BASE Intermediate_Dir "ARMV4Dbg"
+# PROP Output_Dir "ARMV4Dbg"
+# PROP Intermediate_Dir "ARMV4Dbg"
+# ADD CPP /nologo /W3 /I "src" /D "WIN32" /D "_WIN32_WCE" /D "ARMV4" /D "_DEBUG" /D "_WINDOWS" /c
+# ADD LINK32 commctrl.lib coredll.lib /nologo /subsystem:windows /debug /MACHINE:ARM
+!ELSEIF "$(CFG)" == "Minecraft WCE Edition - Win32 (WCE ARMV4I) Release"
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 0
+# PROP BASE Output_Dir "ARMV4IRel"
+# PROP BASE Intermediate_Dir "ARMV4IRel"
+# PROP Output_Dir "ARMV4IRel"
+# PROP Intermediate_Dir "ARMV4IRel"
+# ADD CPP /nologo /W3 /I "src" /D "WIN32" /D "_WIN32_WCE" /D "ARMV4I" /D "NDEBUG" /D "_WINDOWS" /c
+# ADD LINK32 commctrl.lib coredll.lib /nologo /subsystem:windows /MACHINE:ARM
+!ELSEIF "$(CFG)" == "Minecraft WCE Edition - Win32 (WCE ARMV4I) Debug"
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir "ARMV4IDbg"
+# PROP BASE Intermediate_Dir "ARMV4IDbg"
+# PROP Output_Dir "ARMV4IDbg"
+# PROP Intermediate_Dir "ARMV4IDbg"
+# ADD CPP /nologo /W3 /I "src" /D "WIN32" /D "_WIN32_WCE" /D "ARMV4I" /D "_DEBUG" /D "_WINDOWS" /c
+# ADD LINK32 commctrl.lib coredll.lib /nologo /subsystem:windows /debug /MACHINE:ARM
+!ENDIF
+
+# Begin Target
+# Name "Minecraft WCE Edition - Win32 (WCE ARMV4) Release"
+# Name "Minecraft WCE Edition - Win32 (WCE ARMV4) Debug"
+# Name "Minecraft WCE Edition - Win32 (WCE ARMV4I) Release"
+# Name "Minecraft WCE Edition - Win32 (WCE ARMV4I) Debug"
+# Begin Group "Client Core"
+
+# PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
+
+# Begin Source File
+
+SOURCE=..\src\client\gamemode\gamemode.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\client\player\physics.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\client\player\player.cpp
+# End Source File
+
+# End Group
+
+# Begin Group "NBT"
+
+# PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
+
+# Begin Source File
+
+SOURCE=..\src\nbt\tag.cpp
+# End Source File
+
+# End Group
+
+# Begin Group "CE Platform"
+
+# PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
+
+# Begin Source File
+
+SOURCE=..\src\platform\audio\sound.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\platform\framebuffer_wince.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\platform\path.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\platform\wince_renderer.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\platform\wince_texture.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\platform\wince_world.cpp
+# End Source File
+
+# End Group
+
+# Begin Group "Utilities"
+
+# PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
+
+# Begin Source File
+
+SOURCE=..\src\util\data_io.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\util\fast_memcpy.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\util\random_pos.cpp
+# End Source File
+
+# End Group
+
+# Begin Group "Entry Point"
+
+# PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
+
+# Begin Source File
+
+SOURCE=..\src\wince_main.cpp
+# End Source File
+
+# End Group
+
+# Begin Group "World Engine"
+
+# PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\ai\body_control.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\ai\goal.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\ai\goal_selector.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\ai\goals\arrow_attack_goal.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\ai\goals\break_door_goal.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\ai\goals\breed_goal.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\ai\goals\door_interact_goal.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\ai\goals\eat_tile_goal.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\ai\goals\flee_sun_goal.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\ai\goals\float_goal.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\ai\goals\follow_parent_goal.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\ai\goals\hurt_by_target_goal.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\ai\goals\look_at_player_goal.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\ai\goals\melee_attack_goal.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\ai\goals\nearest_attackable_target_goal.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\ai\goals\panic_goal.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\ai\goals\random_look_around_goal.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\ai\goals\random_stroll_goal.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\ai\goals\restrict_sun_goal.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\ai\goals\swell_goal.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\ai\goals\target_goal.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\ai\goals\tempt_goal.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\ai\jump_control.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\ai\look_control.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\ai\move_control.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\ai\sensing.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\animal\animal.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\animal\chicken.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\animal\cow.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\animal\pig.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\animal\sheep.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\arrow.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\entity.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\entity_factory.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\falling_tile.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\hanging_entity.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\item_entity.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\local_player.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\minecart.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\mob.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\mob_factory.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\monster\creeper.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\monster\monster.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\monster\pig_zombie.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\monster\skeleton.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\monster\spider.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\monster\zombie.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\motive.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\painting.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\path_finder_mob.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\player.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\primed_tnt.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\throwable.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\entity\tripod_camera.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\inventory\filling_container.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\inventory\inventory.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\item\armor_item.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\item\bonemeal_item.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\item\bucket_item.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\item\clock_item.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\item\compass_item.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\item\crafting\recipe.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\item\crafting\recipes.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\item\creative_items.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\item\hanging_entity_item.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\item\hoe_item.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\item\item.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\item\item_instance.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\item\minecart_item.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\item\seed_item.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\item\sign_item.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\item\spawn_egg_item.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\item\tile_item.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\block_store.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\chunk\chunk.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\chunk\chunk_build.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\chunk\chunk_cache.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\chunk\chunk_draw.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\dirty.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\explosion.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\leafdecay.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\level.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\levelgen\ImprovedNoise.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\levelgen\PerlinNoise.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\levelgen\Synth.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\levelgen\biome.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\levelgen\caves.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\levelgen\feature_cactus.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\levelgen\feature_clay.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\levelgen\feature_flower.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\levelgen\feature_lake.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\levelgen\feature_mushroom.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\levelgen\feature_ore.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\levelgen\feature_reeds.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\levelgen\feature_snow.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\levelgen\feature_spring.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\levelgen\feature_tree_birch.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\levelgen\feature_tree_jungle.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\levelgen\feature_tree_oak.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\levelgen\feature_tree_pine.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\levelgen\feature_tree_spruce.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\levelgen\features_common.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\levelgen\gen_features.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\levelgen\level_source.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\levelgen\mcpegen.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\light.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\light_store.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\liquid.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\mob_spawner.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\pathfinder\path.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\pathfinder\path_finder.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\pathfinder\path_navigation.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\raycast.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\storage\chunk_storage.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\storage\external_servers.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\storage\level_storage.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\storage\region_file.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\storage\worldlist.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\tile\entity\chest_tile_entity.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\tile\entity\furnace_tile_entity.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\tile\entity\reactor_tile_entity.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\tile\entity\sign_tile_entity.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\tile\entity\tile_entity.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\tile\entity\tile_entity_factory.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\tile\fire.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\tile\material.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\tile\nether_reactor_pattern.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\tile\rail_tile.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\tile\redstone_ore.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\tile\tile.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\tile\tile_behavior.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\tile\tile_bush.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\tile\tile_drops.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\tile\tile_farmland.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\tile\tile_furnace_chest.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\tile\tile_glass.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\tile\tile_quartz_sandstone.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\tile\tile_reactor.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\tile\tile_reed_cactus.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\tile\tile_shapes.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\tile\tile_stonecutter_crafting.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\tile\tile_support.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\tile\tile_wool.cpp
+# End Source File
+
+# Begin Source File
+
+SOURCE=..\src\world\level\world.cpp
+# End Source File
+
+# End Group
+
+# End Target
+
+# End Project
