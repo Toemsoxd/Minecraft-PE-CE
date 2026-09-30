@@ -3,7 +3,7 @@
 #define MCPSP_CLIENT_PLAYER_H
 
 #include "client/gui/screens/menu.h"
-#include <pspctrl.h>
+#include "platform/input_wince.h"
 
 void gameUpdate(MenuState& s, unsigned int pressed, const SceCtrlData& pad);
 
