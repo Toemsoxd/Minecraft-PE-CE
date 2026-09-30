@@ -113,6 +113,7 @@ bool winceWorldCreateTest()
     g_level.spawnX = spawnX;
     g_level.spawnZ = spawnZ;
     worldFindSpawn(&g_world, &g_level.spawnX, &g_level.spawnZ, &g_level.spawnY);
+    worldBuildMeshesStep(&g_world, 256);
 
     g_worldBuilt = true;
     return true;
