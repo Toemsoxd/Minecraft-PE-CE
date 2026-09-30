@@ -315,6 +315,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
         else nextFrame=timeMillis();
     }
 
+    winceWorldShutdown();
     g_framebuffer.shutdown();
     return 0;
 }
