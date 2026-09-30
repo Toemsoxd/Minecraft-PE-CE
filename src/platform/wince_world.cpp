@@ -16,6 +16,9 @@ World g_world;
 Level g_level(&g_world);
 bool g_worldBuilt = false;
 
+float g_viewDist = WORLD_VIEW_DIST;
+float g_viewDistEff = WORLD_VIEW_DIST;
+
 static bool g_runtimeReady = false;
 
 bool winceWorldInit()
@@ -70,6 +73,7 @@ bool winceWorldLoadFirst()
         return false;
     }
 
+    worldBuildMeshesStep(&g_world, 256);
     g_worldBuilt = true;
     return true;
 }
