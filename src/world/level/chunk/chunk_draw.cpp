@@ -36,7 +36,7 @@ DrawVertex* chunkPackFinish(const DrawVertex* staging, int n) {
 DrawVertex* chunkPack(const ChunkVertex* s, int n, int ox, int oy, int oz,
                       float* ylo, float* yhi) {
     profBegin(PROF_MALLOC);
-    DrawVertex* d = (DrawVertex*)memalign(64, (size_t)n * sizeof(DrawVertex));
+    DrawVertex* d = (DrawVertex*)malloc((size_t)n * sizeof(DrawVertex));
     profEnd(PROF_MALLOC);
     if (!d) return 0;
     int qlo = 32767, qhi = -32768;
