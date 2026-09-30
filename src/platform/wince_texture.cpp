@@ -1,5 +1,5 @@
 #include "platform/wince_texture.h"
-#include "data/images/terrain_565.h"
+#include "../../data/images/terrain_565.h"
 
 #include <math.h>
 
