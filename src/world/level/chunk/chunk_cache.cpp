@@ -203,7 +203,7 @@ int worldStream(World* w, float px, float pz, int budgetMs) {
     const int pcx = (int)floorf(px) >> 4, pcz = (int)floorf(pz) >> 4;
     const int R = loadRadius(w);
     const int E = R + 1;
-    const unsigned int tStart = sceKernelGetSystemTimeLow();
+    const unsigned int tStart = GetTickCount();
     int brought = 0;
 
     const unsigned int EVICT_BUDGET_US = 2000;
@@ -213,7 +213,7 @@ int worldStream(World* w, float px, float pz, int budgetMs) {
         if (c->x >= pcx - E && c->x <= pcx + E && c->z >= pcz - E && c->z <= pcz + E) continue;
         if (worldSlotBusy(c)) continue;
         evict(w, i);
-        if ((unsigned int)(sceKernelGetSystemTimeLow() - tStart) > EVICT_BUDGET_US) break;
+        if ((unsigned int)(GetTickCount() - tStart) > EVICT_BUDGET_US) break;
     }
 
     if (g_jobDone && !s_pend) {
@@ -231,7 +231,7 @@ int worldStream(World* w, float px, float pz, int budgetMs) {
     if (g_jobPending) return brought;
 
     {
-        if ((unsigned int)(sceKernelGetSystemTimeLow() - tStart) > (unsigned int)budgetMs * 1000u)
+        if ((unsigned int)(GetTickCount() - tStart) > (unsigned int)budgetMs * 1000u)
             return brought;
         int bestX = 0, bestZ = 0, bestD = 0x7FFFFFFF;
         for (int dz = -R; dz <= R; dz++)
