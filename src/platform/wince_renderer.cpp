@@ -1,5 +1,6 @@
 #include "platform/wince_renderer.h"
 #include "platform/framebuffer_wince.h"
+#include "platform/wince_texture.h"
 #include "world/level/world.h"
 #include "world/level/tile/tile.h"
 #include <math.h>
@@ -322,6 +323,39 @@ void WinceRenderer::render(FramebufferWince* fb)
             } else {
                 unsigned char data = worldData(m_world, hit.x, hit.y, hit.z);
                 color = blockBaseColor(hit.id, data);
+
+                /*
+                 * Use the same Tile::getTexture() atlas coordinates as the
+                 * portable game code.  The ray hit supplies the sub-block
+                 * coordinate, so this samples the actual 16x16 terrain.png
+                 * tile instead of approximating blocks with flat colors.
+                 */
+                if (Tile::tiles[hit.id]) {
+                    int texCol = 0;
+                    int texRow = 0;
+                    unsigned int texTint = 0xFFFFFFFFu;
+                    float hx = x + dirX * hit.distance;
+                    float hy = y + dirY * hit.distance;
+                    float hz = z + dirZ * hit.distance;
+                    float fx = hx - floorf(hx);
+                    float fy = hy - floorf(hy);
+                    float fz = hz - floorf(hz);
+                    float tu = fx;
+                    float tv = fy;
+
+                    switch (hit.face) {
+                    case 0: tu = fx;      tv = fz;      break;
+                    case 1: tu = fx;      tv = 1.0f-fz; break;
+                    case 2: tu = 1.0f-fx; tv = 1.0f-fy; break;
+                    case 3: tu = fx;      tv = 1.0f-fy; break;
+                    case 4: tu = 1.0f-fz; tv = 1.0f-fy; break;
+                    default:tu = fz;      tv = 1.0f-fy; break;
+                    }
+
+                    Tile::tiles[hit.id]->getTexture(data, hit.face,
+                                                      &texCol, &texRow, &texTint);
+                    color = winceTextureSample(texCol, texRow, tu, tv, texTint);
+                }
 
                 float faceShade = 1.0f;
                 if (hit.face == 1) faceShade = 1.00f;
