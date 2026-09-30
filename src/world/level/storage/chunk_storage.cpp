@@ -7,8 +7,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <vector>
-#include <pspkernel.h>
-#include <pspthreadman.h>
+#include <windows.h>
 
 #define STORAGE_LOG 0
 #if STORAGE_LOG
