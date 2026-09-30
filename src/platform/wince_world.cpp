@@ -5,6 +5,9 @@
 #include "world/level/storage/level_storage.h"
 #include "world/level/tile/tile.h"
 #include "world/item/item.h"
+#include "world/level/levelgen/mcpegen.h"
+#include "world/level/chunk/chunk_cache.h"
+#include "world/level/levelgen/level_source.h"
 
 #include <windows.h>
 #include <cstring>
@@ -34,7 +37,6 @@ bool winceWorldInit()
 bool winceWorldLoadFirst()
 {
     WorldList list;
-    int i;
     char absDir[320];
     long seed = 0;
     int gameType = 1;
@@ -70,6 +72,60 @@ bool winceWorldLoadFirst()
 
     g_worldBuilt = true;
     return true;
+}
+
+bool winceWorldCreateTest()
+{
+    const long seed = 0x13579BDFL;
+    const int spawnX = WORLD_W / 2;
+    const int spawnZ = WORLD_D / 2;
+    char absDir[320];
+
+    if (!winceWorldInit())
+        return false;
+
+    if (!worldAllocArrays(&g_world))
+        return false;
+
+    snprintf(absDir, sizeof(absDir), "%s", savePath("saves\\CE_TEST"));
+    CreateDirectory(savePath("saves"), NULL);
+    CreateDirectory(absDir, NULL);
+
+    LevelStorage::setActiveWorld(absDir, seed, 1, "CE TEST WORLD",
+                                 WORLD_TYPE_OLD, GEN_FEATURES_ALL_ON);
+
+    chunkStorageInit(absDir);
+    worldGenInit(seed, GEN_FEATURES_ALL_ON);
+
+    g_terrainProgress = 0;
+    worldEnsureArea(&g_world, spawnX >> 4, spawnZ >> 4, 2);
+    g_terrainProgress = 70;
+
+    lightCompactAll(&g_world);
+    g_world.lightReady = true;
+    worldUpdateSkyDarken(&g_world);
+    g_terrainProgress = 100;
+
+    g_level.spawnX = spawnX;
+    g_level.spawnZ = spawnZ;
+    worldFindSpawn(&g_world, &g_level.spawnX, &g_level.spawnZ, &g_level.spawnY);
+
+    g_worldBuilt = true;
+    return true;
+}
+
+bool winceWorldStart()
+{
+    if (!winceWorldInit())
+        return false;
+
+    WorldList list;
+    worldListScan(&list);
+
+    if (list.count > 0)
+        return winceWorldLoadFirst();
+
+    return winceWorldCreateTest();
 }
 
 void winceWorldShutdown()
