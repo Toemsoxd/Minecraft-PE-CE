@@ -219,13 +219,48 @@ static void drawCube()
     }
 }
 
+static void drawWorldStatus()
+{
+    g_framebuffer.clear(0xFF315B78u);
+    g_framebuffer.fillRect(0, 0, FRAMEBUFFER_WIDTH, 28, 0xFF1B2B38u);
+
+    if (!g_worldLoadAttempted)
+    {
+        g_framebuffer.drawText(160, 72, TEXT("LOADING WORLD..."), 0xFFFFFFFFu, true);
+        return;
+    }
+
+    if (!g_worldLoadOK)
+    {
+        g_framebuffer.drawText(160, 72, TEXT("WORLD LOAD FAILED"), 0xFFFF7070u, true);
+        g_framebuffer.drawText(160, 104, TEXT("CHECK MEMORY / SAVES"), 0xFFFFFFFFu, true);
+        return;
+    }
+
+    g_framebuffer.drawText(160, 14, TEXT("MINECRAFT PE CE"), 0xFFFFFFFFu, true);
+    g_framebuffer.drawText(160, 62, TEXT("WORLD LOADED"), 0xFF80FF80u, true);
+    g_framebuffer.drawText(160, 86, TEXT("TERRAIN ENGINE ONLINE"), 0xFFE0E0E0u, true);
+
+    {
+        TCHAR buf[64];
+        wsprintf(buf, TEXT("PROGRESS %d%%"), winceWorldProgress());
+        g_framebuffer.drawText(160, 116, buf, 0xFFFFFFFFu, true);
+        wsprintf(buf, TEXT("SPAWN %d %d %d"),
+                 g_level.spawnX, g_level.spawnY, g_level.spawnZ);
+        g_framebuffer.drawText(160, 144, buf, 0xFFE0E0E0u, true);
+    }
+
+    g_framebuffer.drawText(160, 188, TEXT("NEXT: CE CHUNK RENDERER"), 0xFFFFFF80u, true);
+    g_framebuffer.drawText(160, 212, TEXT("ARMV4 ENGINE"), 0xFFB0B0B0u, true);
+}
+
 static void updateMenu()
 {
     static bool oldUp=false, oldDown=false, oldEnter=false;
     bool up=keyPressed(VK_UP), down=keyPressed(VK_DOWN), enter=keyPressed(VK_RETURN);
     if (up && !oldUp) g_menuSelection=0;
     if (down && !oldDown) g_menuSelection=1;
-    if (enter && !oldEnter && g_menuSelection==0) { g_game=true; g_paused=false; }
+    if (enter && !oldEnter && g_menuSelection==0) { g_game=true; g_paused=false; g_worldLoadAttempted=true; g_worldLoadOK=winceWorldStart(); }
     oldUp=up; oldDown=down; oldEnter=enter;
 }
 
@@ -265,7 +300,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
         if (g_game) {
             updateGame();
-            drawCube();
+            if (g_worldBuilt) drawWorldStatus(); else drawCube();
             if (!g_paused) g_angle += 0.018f;
         } else {
             updateMenu();
