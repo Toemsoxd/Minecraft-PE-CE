@@ -2,6 +2,7 @@
 #include <math.h>
 #include "platform/time_wince.h"
 #include "platform/framebuffer_wince.h"
+#include "platform/wince_world.h"
 
 unsigned long g_timeBootMs = 0;
 float g_gameSeconds = 0.0f;
@@ -11,6 +12,8 @@ static HWND g_window = 0;
 static FramebufferWince g_framebuffer;
 static bool g_running = true;
 static bool g_game = false;
+static bool g_worldLoadAttempted = false;
+static bool g_worldLoadOK = false;
 static bool g_paused = false;
 static int g_menuSelection = 0;
 static float g_angle = 0.0f;
