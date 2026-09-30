@@ -208,6 +208,7 @@ void worldListScan(WorldList* out)
 
         char p[360];
         SYSTEMTIME t;
+        ZeroMemory(&t, sizeof(t));
         snprintf(p, sizeof(p), "saves/%s/lastplayed", out->names[i]);
         if (!getFileDate(savePath(p), &t))
         {
