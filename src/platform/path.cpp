@@ -26,7 +26,7 @@ void pathInit(const char* argv0)
 
     g_base[0] = '\0';
 
-    n = GetModuleFileName(NULL, g_base, sizeof(g_base));
+    n = GetModuleFileNameA(NULL, g_base, sizeof(g_base));
     if (n == 0 || n >= sizeof(g_base))
     {
         if (argv0 && argv0[0])
