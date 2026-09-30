@@ -17,7 +17,6 @@
 #include <time.h>
 #endif
 #include <math.h>
-#include <pspkernel.h>
 
 static int g_meshBuildCursor = 0;
 static long g_worldSeed = 0;
