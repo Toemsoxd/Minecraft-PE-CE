@@ -101,7 +101,9 @@ static CompoundTag* buildPlayerTag(World* w) {
     (void)w;
     CompoundTag* p = new CompoundTag();
 
-    float px = g_level.player->x, py = g_level.player->y, pz = g_level.player->z;
+    float px = g_level.player ? g_level.player->x : 0.0f;
+    float py = g_level.player ? g_level.player->y : -1.0f;
+    float pz = g_level.player ? g_level.player->z : 0.0f;
     if (!(px == px) || !(py == py) || !(pz == pz) || py < 0.0f) {
         int fx, fz, feetY; worldFindSpawn(w, &fx, &fz, &feetY);
         px = fx + 0.5f; py = feetY + PLAYER_EYE; pz = fz + 0.5f;
@@ -109,19 +111,21 @@ static CompoundTag* buildPlayerTag(World* w) {
     p->put("Pos",      floatList(px, py, pz));
     p->put("Motion",   floatList(0.0f, 0.0f, 0.0f));
     p->put("Rotation", floatList(g_level.player->yRot, g_level.player->xRot));
-    p->putShort("Health", (short)g_level.player->health);
+    p->putShort("Health", (short)(g_level.player ? g_level.player->health : 20));
 
-    p->putBoolean("Sleeping", g_level.player->sleeping);
-    p->putShort("SleepTimer", g_level.player->sleepCounter);
-    p->putInt("BedPositionX", g_level.player->bedX);
-    p->putInt("BedPositionY", g_level.player->bedY);
-    p->putInt("BedPositionZ", g_level.player->bedZ);
+    p->putBoolean("Sleeping", g_level.player ? g_level.player->sleeping : false);
+    p->putShort("SleepTimer", (short)(g_level.player ? g_level.player->sleepCounter : 0));
+    p->putInt("BedPositionX", g_level.player ? g_level.player->bedX : 0);
+    p->putInt("BedPositionY", g_level.player ? g_level.player->bedY : 0);
+    p->putInt("BedPositionZ", g_level.player ? g_level.player->bedZ : 0);
 
-    p->putInt("SpawnX", g_level.player->respawnX);
-    p->putInt("SpawnY", g_level.player->respawnY);
-    p->putInt("SpawnZ", g_level.player->respawnZ);
+    p->putInt("SpawnX", g_level.player ? g_level.player->respawnX : g_level.spawnX);
+    p->putInt("SpawnY", g_level.player ? g_level.player->respawnY : g_level.spawnY);
+    p->putInt("SpawnZ", g_level.player ? g_level.player->respawnZ : g_level.spawnZ);
 
     ListTag* inv = new ListTag();
+    if (g_level.player)
+    {
     if (g_level.player->inventory->isCreative()) {
         for (int i = 0; i < Inventory::HOTBAR; i++) {
             ItemInstance* it = g_level.player->inventory->getLinked(i);
@@ -158,8 +162,13 @@ static CompoundTag* buildPlayerTag(World* w) {
     }
     p->put("Inventory", inv);
 
+    }
+    p->put("Inventory", inv);
+
     {
         ListTag* ar = new ListTag();
+        if (g_level.player)
+        {
         for (int i = 0; i < Player::NUM_ARMOR; i++) {
             ItemInstance& it = g_level.player->armor[i];
             CompoundTag* slot = new CompoundTag();
@@ -170,6 +179,8 @@ static CompoundTag* buildPlayerTag(World* w) {
         }
         p->put("Armor", ar);
     }
+        }
+        p->put("Armor", ar);
     return p;
 }
 
@@ -251,7 +262,7 @@ static void loadLevelDat(World* w, const char* absDir, long* outSeed, int* outGa
                                         tag->getInt("SpawnZ"));
                 }
                 CompoundTag* p = tag->getCompound("Player");
-                if (p) {
+                if (p && g_level.player) {
                     ListTag* pos = p->getList("Pos");
                     ListTag* rot = p->getList("Rotation");
                     if (pos->size() >= 3) {
@@ -527,7 +538,14 @@ bool load(World* w, const char* absDir, long* outSeed, int* outGameType) {
 
     chunkStorageInit(absDir);
 
-    loadChunks(w, Mth::floor(g_level.player->x) >> 4, Mth::floor(g_level.player->z) >> 4);
+    int loadX = g_level.spawnX;
+    int loadZ = g_level.spawnZ;
+    if (g_level.player)
+    {
+        loadX = Mth::floor(g_level.player->x);
+        loadZ = Mth::floor(g_level.player->z);
+    }
+    loadChunks(w, loadX >> 4, loadZ >> 4);
     g_terrainProgress = 60;
 
     worldScheduleLoadedTicks(w);
