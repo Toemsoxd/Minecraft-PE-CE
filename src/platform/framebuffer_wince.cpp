@@ -1,4 +1,4 @@
-#include "platform/framebuffer_wince.h"
+#include "framebuffer_wince.h"
 #include <string.h>
 
 static const unsigned char font5x7[][5] = {
