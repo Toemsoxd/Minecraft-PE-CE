@@ -141,7 +141,9 @@ static void updateMenu()
     bool up=keyPressed(VK_UP), down=keyPressed(VK_DOWN), enter=keyPressed(VK_RETURN);
     if (up && !oldUp) g_menuSelection=0;
     if (down && !oldDown) g_menuSelection=1;
-    if (enter && !oldEnter && g_menuSelection==0) { g_game=true; g_paused=false; g_worldLoadAttempted=true; g_worldLoadOK=winceWorldStart(); }
+    if (enter && !oldEnter && g_menuSelection==0) { g_game=true; g_paused=false; g_worldLoadAttempted=true; g_worldLoadOK=winceWorldStart();
+        if (g_worldLoadOK && g_worldBuilt)
+            g_renderer.reset(&g_world, g_level.spawnX, g_level.spawnY, g_level.spawnZ); }
     oldUp=up; oldDown=down; oldEnter=enter;
 }
 
