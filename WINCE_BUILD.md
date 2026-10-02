@@ -1,4 +1,4 @@
-# Windows CE / eVC++ port
+# Windows CE / Visual Studio 2008 D3DM port
 
 This branch contains the Windows CE port work. The original PSP backend remains as the reference implementation while platform-specific pieces are replaced incrementally.
 
@@ -8,7 +8,47 @@ The CE entry point is src/wince_main.cpp. It creates a native Windows CE window,
 
 The title screen remains procedural, but PLAY now enters the actual CE world engine. The voxel renderer deliberately avoids the PSP GU stack and renders directly into the CE framebuffer. It is a compatibility-first milestone, not the final optimized renderer.
 
-### eVC++ setup
+#
+## Direct3D Mobile backend
+
+The `wince-d3dm` branch adds a native Direct3D Mobile backend while retaining the software voxel renderer as a fallback.
+
+The primary path is:
+
+    WinMain
+       |
+       +-- WinceD3DMRenderer
+              |
+              +-- Direct3DMobileCreate
+              +-- 320x240 R5G6B5 backbuffer
+              +-- D16 depth buffer when the driver accepts it
+              +-- fixed-function view/projection transforms
+              +-- persistent D3DM vertex buffer
+              +-- existing MCPE chunk meshes
+
+The renderer consumes the existing `ChunkMesh` / `DrawVertex` data rather than rebuilding voxel geometry. Chunk positions stay in the existing packed 1/256-unit representation and are converted to D3DM float vertices when batches are uploaded.
+
+The first D3DM stage intentionally renders the opaque terrain mesh with vertex colors. Water, leaves, no-mip materials, terrain atlas textures, entities and HUD are still separate stages. This keeps the first hardware path small enough to diagnose on the HTC S730 before adding more GPU state.
+
+D3DM is attempted at startup. If `Direct3DMobileCreate` or device/vertex-buffer creation fails, the existing software renderer remains active.
+
+### Visual Studio 2008
+
+A native VS2008 Smart Device project and solution are included:
+
+1. Open `wince-project/MinecraftPECE-WS2008.sln` in Visual Studio 2008.
+2. Select `Release|Windows Mobile 6 Standard SDK (ARMV4I)`.
+3. The project links `D3dm.lib` and `D3dmguid.lib` in addition to the existing CE libraries.
+4. The project uses the Windows Mobile 6 Standard ARMV4I target and the existing `src/` tree.
+5. Deploy the resulting `MinecraftPECE.exe` to the S730.
+
+The project files are prepared from the current CE source list; a physical S730 build/deployment has **not** been performed by this repository change.
+
+### D3DM API note
+
+Direct3D Mobile is not desktop Direct3D 9. In particular, the backend uses vertex buffers and `DrawPrimitive`; it does not rely on `DrawPrimitiveUP`. Microsoft documents `IDirect3DMobileDevice` as providing vertex-buffer creation, stream binding, transforms, drawing and presentation, and the Windows CE D3DM SDK supplies `D3dm.lib` / `D3dmguid.lib`.
+
+## Legacy eVC++ setup
 
 Use eMbedded Visual C++ 4.0 SP2 with the Windows CE .NET 4.2 SDK and the **ARMV4** target.
 
