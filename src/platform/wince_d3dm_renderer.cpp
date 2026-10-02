@@ -76,7 +76,7 @@ WinceD3DMRenderer::WinceD3DMRenderer()
     : x(0.0f), y(0.0f), z(0.0f), yaw(0.0f), pitch(0.0f),
       grounded(false), m_world(0), m_d3dm(0), m_device(0),
       m_vertexBuffer(0), m_hwnd(0), m_vertexCapacity(D3DM_VERTEX_CAPACITY),
-      m_verticalVelocity(0.0f), m_ready(false)
+      m_verticalVelocity(0.0f), m_ready(false), m_hasDepth(false)
 {
 }
 
@@ -129,6 +129,9 @@ bool WinceD3DMRenderer::createDevice(HWND hwnd)
         }
         if (!createPresentParameters(hwnd, false))
             return false;
+        m_hasDepth = false;
+    } else {
+        m_hasDepth = true;
     }
 
     D3DMCAPS caps;
@@ -148,8 +151,8 @@ bool WinceD3DMRenderer::createDevice(HWND hwnd)
     if (FAILED(m_device->SetRenderState(D3DMRS_LIGHTING, FALSE)))
         return false;
     m_device->SetRenderState(D3DMRS_CULLMODE, D3DMCULL_NONE);
-    m_device->SetRenderState(D3DMRS_ZENABLE, TRUE);
-    m_device->SetRenderState(D3DMRS_ZWRITEENABLE, TRUE);
+    m_device->SetRenderState(D3DMRS_ZENABLE, m_hasDepth ? TRUE : FALSE);
+    m_device->SetRenderState(D3DMRS_ZWRITEENABLE, m_hasDepth ? TRUE : FALSE);
     m_device->SetRenderState(D3DMRS_ALPHABLENDENABLE, FALSE);
 
     return true;
@@ -217,6 +220,7 @@ bool WinceD3DMRenderer::init(HWND hwnd)
 void WinceD3DMRenderer::shutdown()
 {
     m_ready = false;
+    m_hasDepth = false;
     releaseResources();
     m_world = 0;
     m_hwnd = 0;
@@ -456,7 +460,7 @@ void WinceD3DMRenderer::render()
         return;
 
     m_device->Clear(
-        0, NULL, D3DMCLEAR_TARGET | D3DMCLEAR_ZBUFFER,
+        0, NULL, m_hasDepth ? (D3DMCLEAR_TARGET | D3DMCLEAR_ZBUFFER) : D3DMCLEAR_TARGET,
         D3DMCOLOR_XRGB(82, 146, 190), 1.0f, 0);
 
     if (FAILED(m_device->BeginScene()))
