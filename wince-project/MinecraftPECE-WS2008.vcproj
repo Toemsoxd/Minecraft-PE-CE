@@ -17,7 +17,7 @@
         ATLMinimizesCRunTimeLibraryUsage="false">
       <Tool Name="VCCLCompilerTool"
         Optimization="2"
-        AdditionalIncludeDirectories="src"
+        AdditionalIncludeDirectories="..\src"
         PreprocessorDefinitions="WIN32;_WIN32_WCE;ARMV4I;_WINDOWS;NDEBUG"
         RuntimeLibrary="0"
         WarningLevel="3"
