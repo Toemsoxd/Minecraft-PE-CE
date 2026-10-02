@@ -1,9 +1,8 @@
 #include "world/level/chunk/chunk.h"
-#include "gpu/gu.h"
+#include "platform/renderer_memory.h"
 #include "world/level/chunk/mesh_sink.h"
 #include "client/renderer/level/frustum.h"
 #include <malloc.h>
-#include <pspkernel.h>
 #include "util/prof.h"
 
 extern float g_camX, g_camY, g_camZ;
@@ -143,7 +142,7 @@ void chunkBuildSection(ChunkMesh* c, const World* w, int si) {
     s->ox = ox; s->oy = y0; s->oz = oz;
 
     if (sectionCannotEmit(w, ox, oz, si)) {
-        if (s->mesh)   { guDeferFree(s->mesh);   s->mesh = 0; }
+        if (s->mesh)   { rendererDeferFree(s->mesh);   s->mesh = 0; }
         if (s->water)  { guDeferFree(s->water);  s->water = 0; }
         if (s->leaves) { guDeferFree(s->leaves); s->leaves = 0; }
         if (s->noMip)  { guDeferFree(s->noMip);  s->noMip = 0; }
