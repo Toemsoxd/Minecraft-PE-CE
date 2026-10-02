@@ -2,6 +2,7 @@
 #define MCPECE_WINCE_D3DM_RENDERER_H
 
 #include <windows.h>
+#include <d3dm.h>
 
 class FramebufferWince;
 struct World;
@@ -45,6 +46,7 @@ private:
     int m_vertexCapacity;
     float m_verticalVelocity;
     bool m_ready;
+    bool m_hasDepth;
 };
 
 #endif
