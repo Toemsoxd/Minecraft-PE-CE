@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject ProjectType="Visual C++" Version="9.00"
   Name="MinecraftPECE"
-  ProjectGUID="{8E4A1B6C-4D3A-4E0F-9A54-CE2008D3D0001}"
+  ProjectGUID="{8E4A1B6C-4D3A-4E0F-9A54-CE2008D3D001}"
   RootNamespace="MinecraftPECE"
   Keyword="Win32Proj">
   <Platforms>
